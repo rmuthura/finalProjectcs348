@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select an Album</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 60px;
+            background-color: #f7fff7;
+        }
+
+        h1 {
+            font-size: 40px;
+            color: #2d6a4f;
+            margin-bottom: 30px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .actions {
+            margin: 20px;
+        }
+
+        .action-button {
+            display: inline-block;
+            background-color: #40916c;
+            color: white;
+            padding: 10px 16px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 0 8px;
+            font-size: 15px;
+        }
+
+        .action-button:hover {
+            background-color: #2d6a4f;
+        }
+
+        .action-button.delete {
+            background-color: #d00000;
+        }
+
+        .action-button.delete:hover {
+            background-color: #a00000;
+        }
+
+        table {
+            margin: 0 auto;
+            margin-top: 30px;
+            border-collapse: collapse;
+            width: 90%;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        th {
+            background-color: #b7e4c7;
+            color: #1b4332;
+        }
+
+        td {
+            background-color: #e9f5ec;
+        }
+
+        .edit-link, .delete-link {
+            font-size: 14px;
+            color: #40916c;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .delete-link {
+            color: #d00000;
+        }
+
+        .edit-link:hover,
+        .delete-link:hover {
+            text-decoration: underline;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 30px;
+            background-color: #52b788;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .back-home:hover {
+            background-color: #40916c;
+        }
+    </style>
+</head>
+<body>
+    {% load music_extras %}
+    <h1>Select an Album</h1>
+
+    <form method="get">
+        <select name="album" onchange="this.form.submit()">
+            <option value="">-- Select an Album --</option>
+            {% for album in albums %}
+                <option value="{{ album.id }}" {% if selected_album == album.id %}selected{% endif %}>
+                    {{ album.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <div class="actions">
+        <a href="{% url 'add_song' %}" class="action-button">Add Song</a>
+        {% if selected_album %}
+            <a href="{% url 'delete_album' selected_album %}" class="action-button delete">Delete Album</a>
+        {% endif %}
+        <a href="{% url 'add_album' %}" class="action-button">Add Album</a>
+        <a href="{% url 'delete_artist_prompt' %}" class="action-button delete">Delete Artist</a>
+    </div>
+
+    {% if songs %}
+        <h2>Songs in Album</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Artist</th>
+                    <th>Album</th>
+                    <th>Duration</th>
+                    <th>Genre</th>
+                    <th>Explicit</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for song in songs %}
+                    <tr>
+                        <td>{{ song.title }}</td>
+                        <td>{{ song.artist.name }}</td>
+                        <td>{{ song.album.name }}</td>
+                        <td>{{ song.formatted_duration }}</td>
+                        <td>{{ song.genre }}</td>
+                        <td>{% if song.explicit %}Yes{% else %}No{% endif %}</td>
+                        <td>
+                            <a class="edit-link" href="{% url 'update_song' song.id %}">Edit</a>
+                            <a class="delete-link" href="{% url 'delete_song' song.id %}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <a href="{% url 'home' %}" class="back-home">Back to Home</a>
+
+</body>
+</html>

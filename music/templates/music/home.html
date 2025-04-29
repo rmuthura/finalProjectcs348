@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mock-ify</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0f7eb;
+            text-align: center;
+            padding-top: 80px;
+        }
+
+        h1 {
+            font-size: 50px;
+            color: #1b4332;
+            margin-bottom: 40px;
+        }
+
+        .button {
+            display: block;
+            margin: 20px auto;
+            width: 250px;
+            padding: 15px;
+            font-size: 18px;
+            background-color: #52b788;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+        }
+
+        .button:hover {
+            background-color: #40916c;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Mock-ify</h1>
+
+    <a href="{% url 'album_view' %}" class="button">View Albums</a>
+    <a href="{% url 'short_songs_input' %}" class="button">Filter Songs (Duration)</a>
+    <a href="{% url 'create_playlist' %}" class="button">Create a Playlist</a>
+    <a href="{% url 'filter_by_genre' %}" class="button">Filter Songs by Genre</a>
+    <a href="{% url 'filter_by_explicit' %}" class="button">Filter Songs by Explicit</a>
+
+</body>
+</html>

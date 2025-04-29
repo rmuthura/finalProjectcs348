@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Filter Songs by Explicit</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1fdf3;
+            text-align: center;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #2d6a4f;
+            font-size: 34px;
+            margin-bottom: 20px;
+        }
+
+        select {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #52b788;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        table {
+            margin: 30px auto;
+            border-collapse: collapse;
+            width: 90%;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #b7e4c7;
+        }
+
+        td {
+            background-color: #e9f5ec;
+        }
+
+        a.back {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            background-color: #40916c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+        }
+
+        a.back:hover {
+            background-color: #2d6a4f;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Filter Songs by Explicit</h1>
+
+<form method="get">
+    <label for="explicit">Explicit?</label>
+    <select name="explicit" id="explicit">
+        <option value="1" {% if explicit == "1" %}selected{% endif %}>Yes</option>
+        <option value="0" {% if explicit == "0" %}selected{% endif %}>No</option>
+    </select>
+    <button type="submit">Filter</button>
+</form>
+
+{% if songs %}
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Artist ID</th>
+            <th>Album ID</th>
+            <th>Duration</th>
+            <th>Genre</th>
+            <th>Explicit</th>
+        </tr>
+        {% for song in songs %}
+        <tr>
+            <td>{{ song.title }}</td>
+            <td>{{ song.artist }}</td>
+            <td>{{ song.album }}</td>
+            <td>{{ song.duration }}</td>
+            <td>{{ song.genre }}</td>
+            <td>{% if song.explicit %}Yes{% else %}No{% endif %}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% elif explicit %}
+    <p>No songs found with explicit = {{ explicit }}.</p>
+{% endif %}
+
+<a class="back" href="{% url 'home' %}">Back to Home</a>
+
+</body>
+</html>

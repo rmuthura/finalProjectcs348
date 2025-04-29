@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Filter Songs by Duration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1fdf3;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #2d6a4f;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #52b788;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #40916c;
+        }
+
+        table {
+            margin: 30px auto;
+            border-collapse: collapse;
+            width: 90%;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        th {
+            background-color: #b7e4c7;
+            color: #1b4332;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f0fdf4;
+        }
+
+        tr:nth-child(odd) td {
+            background-color: #e9f5ec;
+        }
+
+        a.back {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            font-size: 16px;
+            background-color: #40916c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+        }
+
+        a.back:hover {
+            background-color: #2d6a4f;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Filter Songs by Duration</h1>
+
+<form method="get">
+    <label for="duration">Max Duration (mm:ss):</label>
+    <input type="text" name="duration" id="duration" value="{{ max_duration }}" placeholder="e.g. 2:30">
+    <button type="submit">Filter</button>
+</form>
+
+{% if songs %}
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>Duration</th>
+                <th>Genre</th>
+                <th>Explicit</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for song in songs %}
+            <tr>
+                <td>{{ song.title }}</td>
+                <td>{{ song.artist }}</td>
+                <td>{{ song.album }}</td>
+                <td>{{ song.duration }}</td>
+                <td>{{ song.genre|default:"—" }}</td>
+                <td>{% if song.explicit %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% elif max_duration %}
+    <p>No songs found under that duration.</p>
+{% endif %}
+
+<a href="{% url 'home' %}" class="back">Back to Home</a>
+
+</body>
+</html>

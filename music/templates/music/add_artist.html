@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Artist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1fdf3;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            font-size: 30px;
+            color: #2d6a4f;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #52b788;
+            color: white;
+            padding: 10px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #40916c;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Add New Artist</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="Artist Name" required><br><br>
+    <button type="submit">➕ Add Artist</button>
+</form>
+
+</body>
+</html>

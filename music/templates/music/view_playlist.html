@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Playlist: {{ playlist.name }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0fdf4;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2d6a4f;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 90%;
+        }
+
+        th, td {
+            border: 1px solid #b7e4c7;
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        th {
+            background-color: #95d5b2;
+            color: #033b2f;
+        }
+
+        tr:nth-child(even) {
+            background-color: #d8f3dc;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            font-size: 16px;
+            background-color: #40916c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+        }
+
+        a:hover {
+            background-color: #2d6a4f;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Playlist: {{ playlist.name }}</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Song Title</th>
+            <th>Artist</th>
+            <th>Album</th>
+            <th>Duration (mm:ss)</th>
+            <th>Genre</th>
+            <th>Explicit</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for song in songs %}
+        <tr>
+            <td>{{ song.title }}</td>
+            <td>{{ song.artist }}</td>
+            <td>{{ song.album }}</td>
+            <td>{{ song.duration }}</td>
+            <td>{{ song.genre }}</td>
+            <td>{% if song.explicit %}Yes{% else %}No{% endif %}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'home' %}">Back to Home</a>
+
+</body>
+</html>

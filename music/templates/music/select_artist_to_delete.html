@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Artist to Delete</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7fff7;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #2d6a4f;
+            margin-bottom: 30px;
+        }
+
+        .artist-list {
+            list-style: none;
+            padding: 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .artist-item {
+            background-color: #e9f5ec;
+            margin: 10px 0;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #b7e4c7;
+        }
+
+        .delete-link {
+            background-color: #d00000;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .delete-link:hover {
+            background-color: #a00000;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            font-size: 16px;
+            background-color: #52b788;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+        }
+
+        .back-button:hover {
+            background-color: #40916c;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Select an Artist to Delete</h1>
+
+    <ul class="artist-list">
+        {% for artist in artists %}
+            <li class="artist-item">
+                {{ artist.name }}
+                <a class="delete-link" href="{% url 'delete_artist' artist.id %}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'album_view' %}" class="back-button">⬅ Back to Albums</a>
+
+</body>
+</html>

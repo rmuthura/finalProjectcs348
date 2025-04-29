@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create a Playlist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0fdf4;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2d6a4f;
+            font-size: 38px;
+        }
+
+        label {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+            width: 300px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+        }
+
+        table {
+            margin: 20px auto;
+            width: 90%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #b7e4c7;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        th {
+            background-color: #95d5b2;
+            color: #033b2f;
+        }
+
+        tr:nth-child(even) {
+            background-color: #d8f3dc;
+        }
+
+        button {
+            background-color: #52b788;
+            color: white;
+            padding: 10px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #40916c;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            font-size: 16px;
+            background-color: #40916c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+        }
+
+        a:hover {
+            background-color: #2d6a4f;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Create a Playlist</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <label for="playlist_name">Playlist Name:</label><br>
+    <input type="text" name="playlist_name" required><br><br>
+
+    <h3>Select Songs:</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Select</th>
+                <th>Song Title</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>Duration</th>
+                <th>Genre</th>
+                <th>Explicit</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for song in songs %}
+                <tr>
+                    <td><input type="checkbox" name="songs" value="{{ song.id }}"></td>
+                    <td>{{ song.title }}</td>
+                    <td>{{ song.artist.name }}</td>
+                    <td>{{ song.album.name }}</td>
+                    <td>{{ song.formatted_duration }}</td>
+                    <td>{{ song.genre }}</td>
+                    <td>{% if song.explicit %}Yes{% else %}No{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <button type="submit">Create Playlist</button>
+</form>
+
+<a href="{% url 'home' %}">Back to Home</a>
+
+</body>
+</html>

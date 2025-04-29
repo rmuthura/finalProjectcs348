@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Artist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff5f5;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #b00020;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        button {
+            background-color: #b00020;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #800010;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            background-color: #52b788;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+        }
+
+        a:hover {
+            background-color: #40916c;
+        }
+    </style>
+</head>
+<body>
+    <h1>Delete Artist</h1>
+
+    <p>Are you sure you want to delete the artist <strong>{{ artist.name }}</strong>?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Yes, Delete Artist</button>
+    </form>
+
+    <a href="{% url 'album_view' %}">⬅ Back to Albums</a>
+</body>
+</html>

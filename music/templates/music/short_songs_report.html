@@ -1,0 +1,18 @@
+<h1>Filter Songs by mm:ss</h1>
+
+<form method="get">
+    <label for="duration">Max Duration (mm:ss):</label>
+    <input type="text" name="duration" id="duration" placeholder="e.g., 2:00" value="{{ max_duration }}">
+    <button type="submit">Filter</button>
+</form>
+
+{% if songs %}
+    <h2>Songs shorter than {{ max_duration }}</h2>
+    <ul>
+        {% for song in songs %}
+            <li>{{ song.title }} – {{ song.duration }}</li>
+        {% endfor %}
+    </ul>
+{% elif max_duration %}
+    <p>No songs found under that duration.</p>
+{% endif %}

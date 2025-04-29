@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add New Album</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0fdf4;
+            padding: 50px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #2d6a4f;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: inline-block;
+            text-align: left;
+            background-color: #e9f5ec;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #b7e4c7;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .add-artist-button {
+            display: inline-block;
+            margin: 10px 0 20px 0;
+            background-color: #52b788;
+            color: white;
+            padding: 8px 14px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .add-artist-button:hover {
+            background-color: #40916c;
+        }
+
+        button {
+            background-color: #40916c;
+            color: white;
+            padding: 10px 25px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2d6a4f;
+        }
+
+        a.back {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            font-size: 16px;
+            background-color: #52b788;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+        }
+
+        a.back:hover {
+            background-color: #40916c;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Add New Album</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <!-- 🔗 Add New Artist Button -->
+    <a href="{% url 'add_artist' %}" class="add-artist-button">➕ Add New Artist</a>
+
+    <button type="submit">Add Album</button>
+</form>
+
+<br>
+<a href="{% url 'album_view' %}" class="back">⬅ Back to Album View</a>
+
+</body>
+</html>
