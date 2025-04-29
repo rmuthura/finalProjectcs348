@@ -1,0 +1,130 @@
+CREATE DATABASE database1;
+CREATE USER 'ramuser'@'localhost' IDENTIFIED BY 'x';
+GRANT ALL PRIVILEGES ON database1.* TO 'ramuser'@'localhost';
+FLUSH PRIVILEGES;
+
+USE database1;
+SHOW PROCEDURE STATUS WHERE Db = 'database1';
+
+SELECT * FROM music_song;
+SELECT * FROM  music_artist;
+SELECT * FROM  music_album;
+
+
+
+#Adding
+DROP PROCEDURE IF EXISTS AddSong;
+DELIMITER //
+CREATE PROCEDURE AddSong(
+    IN title VARCHAR(100),
+    IN album_id INT,
+    IN duration BIGINT,
+    IN artist_id INT,
+    IN genre VARCHAR(100),
+    IN explicit BOOLEAN
+)
+BEGIN
+    INSERT INTO music_song (title, album_id, duration, artist_id, genre, explicit)
+    VALUES (title, album_id, duration, artist_id, genre, explicit);
+END //
+DELIMITER ;
+
+
+#Update
+DROP PROCEDURE IF EXISTS UpdateSong;
+
+DELIMITER //
+
+CREATE PROCEDURE UpdateSong(
+    IN p_song_id INT,
+    IN p_title VARCHAR(100),
+    IN p_album_id INT,
+    IN p_duration BIGINT,
+    IN p_artist_id INT,
+    IN p_genre VARCHAR(50),
+    IN p_explicit BOOLEAN
+)
+BEGIN
+    UPDATE music_song
+    SET 
+        title = p_title,
+        album_id = p_album_id,
+        duration = p_duration,
+        artist_id = p_artist_id,
+        genre = p_genre,
+        explicit = p_explicit
+    WHERE id = p_song_id;
+END //
+
+DELIMITER ;
+
+
+
+#Delete
+DELIMITER //
+
+DROP PROCEDURE IF EXISTS DeleteSong;
+
+CREATE PROCEDURE DeleteSong(IN song_id INT)
+BEGIN
+    DELETE FROM music_song WHERE id = song_id;
+END //
+
+DELIMITER ;
+
+#Add artist
+DELIMITER //
+
+CREATE PROCEDURE AddArtist(IN artist_name VARCHAR(100))
+BEGIN
+    INSERT INTO music_artist (name)
+    VALUES (artist_name);
+END //
+
+DELIMITER ;
+
+#Add Album
+DROP PROCEDURE IF EXISTS AddAlbum;
+DELIMITER //
+CREATE PROCEDURE AddAlbum(
+    IN album_name VARCHAR(100),
+    IN artist_id INT,
+    IN release_year INT
+)
+BEGIN
+    INSERT INTO music_album (name, artist_id, release_year)
+    VALUES (album_name, artist_id, release_year);
+END //
+DELIMITER ;
+
+#Delete Album
+DROP PROCEDURE IF EXISTS DeleteAlbum;
+DELIMITER //
+CREATE PROCEDURE DeleteAlbum(
+    IN album_id INT
+)
+BEGIN
+    DELETE FROM music_album WHERE id = album_id;
+END //
+DELIMITER ;
+
+-- Delete artist
+DROP PROCEDURE IF EXISTS DeleteArtist;
+
+DELIMITER //
+CREATE PROCEDURE DeleteArtist(IN artist_id INT)
+BEGIN
+    DELETE FROM music_artist WHERE id = artist_id;
+END //
+DELIMITER ;
+
+CREATE INDEX idx_song_genre ON music_song(genre);
+CREATE INDEX idx_song_explicit ON music_song(explicit);
+
+SHOW INDEX FROM music_song;
+SHOW INDEX from  music_artist;
+SHOW INDEX  FROM  music_album;
+
+
+
+
